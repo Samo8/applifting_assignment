@@ -1,5 +1,7 @@
 import 'package:applifting_assignment/app/company_info/bloc/company_info_bloc.dart';
-import 'package:applifting_assignment/app/company_info/company_info_screen.dart';
+
+import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
+import 'package:applifting_assignment/app/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +19,9 @@ class AppliftingApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (_) => HomeBloc(),
+        ),
+        BlocProvider(
           create: (_) => CompanyInfoBloc(),
         ),
       ],
@@ -25,7 +30,7 @@ class AppliftingApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const CompanyInfoScreen(),
+        home: const HomeScreen(),
       ),
     );
   }

@@ -23,89 +23,83 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Applifting SpaceX'),
-      ),
-      body: BlocBuilder<CompanyInfoBloc, CompanyInfoState>(
-        builder: (context, state) {
-          if (state is CompanyInfoLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is CompanyInfoErrorState) {
-            return Center(
-              child: Text(state.error),
-            );
-          } else if (state is CompanyInfoLoadedState) {
-            final companyInfo = state.companyInfo;
-            final headquarters = companyInfo.headquarters;
+    return BlocBuilder<CompanyInfoBloc, CompanyInfoState>(
+      builder: (context, state) {
+        if (state is CompanyInfoLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is CompanyInfoErrorState) {
+          return Center(
+            child: Text(state.error),
+          );
+        } else if (state is CompanyInfoLoadedState) {
+          final companyInfo = state.companyInfo;
+          final headquarters = companyInfo.headquarters;
 
-            return RefreshIndicator(
-              onRefresh: () async => _companyInfoBloc.add(
-                const CompanyInfoFetchDataEvent(),
-              ),
-              child: ListView(
-                padding: const EdgeInsets.only(top: 10.0),
-                children: [
-                  ListItem(
-                    children: [
-                      const TitleItem(text: 'Name:'),
-                      BasicItem(
-                        text: companyInfo.name,
-                      ),
-                    ],
-                  ),
-                  ListItem(
-                    children: [
-                      const TitleItem(text: 'Headquarters:'),
-                      BasicItem(
-                        text:
-                            '${headquarters.address}, ${headquarters.city}, ${headquarters.state}',
-                      ),
-                    ],
-                  ),
-                  ListItem(
-                    children: [
-                      const TitleItem(text: 'CEO & CTO:'),
-                      BasicItem(
-                        text: companyInfo.ceo == companyInfo.cto
-                            ? companyInfo.ceo
-                            : '${companyInfo.ceo} & ${companyInfo.cto}',
-                      ),
-                    ],
-                  ),
-                  ListItem(
-                    children: [
-                      const TitleItem(text: 'Number of employees:'),
-                      BasicItem(
-                        text: '${companyInfo.employees}',
-                      ),
-                    ],
-                  ),
-                  ListItem(
-                    children: [
-                      const TitleItem(text: 'Founded in:'),
-                      BasicItem(
-                        text: '${companyInfo.founded}',
-                      ),
-                    ],
-                  ),
-                  ListItem(
-                    children: [
-                      const TitleItem(text: 'Summary:'),
-                      BasicItem(
-                        text: companyInfo.summary,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
+          return RefreshIndicator(
+            onRefresh: () async => _companyInfoBloc.add(
+              const CompanyInfoFetchDataEvent(),
+            ),
+            child: ListView(
+              padding: const EdgeInsets.only(top: 10.0),
+              children: [
+                ListItem(
+                  children: [
+                    const TitleItem(text: 'Name:'),
+                    BasicItem(
+                      text: companyInfo.name,
+                    ),
+                  ],
+                ),
+                ListItem(
+                  children: [
+                    const TitleItem(text: 'Headquarters:'),
+                    BasicItem(
+                      text: '${headquarters.address}, ${headquarters.city}, ${headquarters.state}',
+                    ),
+                  ],
+                ),
+                ListItem(
+                  children: [
+                    const TitleItem(text: 'CEO & CTO:'),
+                    BasicItem(
+                      text: companyInfo.ceo == companyInfo.cto
+                          ? companyInfo.ceo
+                          : '${companyInfo.ceo} & ${companyInfo.cto}',
+                    ),
+                  ],
+                ),
+                ListItem(
+                  children: [
+                    const TitleItem(text: 'Number of employees:'),
+                    BasicItem(
+                      text: '${companyInfo.employees}',
+                    ),
+                  ],
+                ),
+                ListItem(
+                  children: [
+                    const TitleItem(text: 'Founded in:'),
+                    BasicItem(
+                      text: '${companyInfo.founded}',
+                    ),
+                  ],
+                ),
+                ListItem(
+                  children: [
+                    const TitleItem(text: 'Summary:'),
+                    BasicItem(
+                      text: companyInfo.summary,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }
