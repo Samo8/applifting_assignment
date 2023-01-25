@@ -1,15 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'company_info.dart';
+part of 'company_info_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CompanyInfo _$CompanyInfoFromJson(Map<String, dynamic> json) => CompanyInfo(
-      headquarters:
-          Headquarters.fromJson(json['headquarters'] as Map<String, dynamic>),
-      links: Links.fromJson(json['links'] as Map<String, dynamic>),
+CompanyInfoDTO _$CompanyInfoDTOFromJson(Map<String, dynamic> json) =>
+    CompanyInfoDTO(
+      headquarters: HeadquartersDTO.fromJson(
+          json['headquarters'] as Map<String, dynamic>),
+      links: LinksDTO.fromJson(json['links'] as Map<String, dynamic>),
       name: json['name'] as String,
       founder: json['founder'] as String,
       founded: json['founded'] as int,
@@ -25,7 +26,7 @@ CompanyInfo _$CompanyInfoFromJson(Map<String, dynamic> json) => CompanyInfo(
       id: json['id'] as String,
     );
 
-Map<String, dynamic> _$CompanyInfoToJson(CompanyInfo instance) =>
+Map<String, dynamic> _$CompanyInfoDTOToJson(CompanyInfoDTO instance) =>
     <String, dynamic>{
       'headquarters': instance.headquarters,
       'links': instance.links,

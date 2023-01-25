@@ -1,6 +1,7 @@
-import 'package:applifting_assignment/app/company_info/bloc/company_info_bloc.dart';
+import 'package:applifting_assignment/app/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CompanyInfoScreen extends StatefulWidget {
   const CompanyInfoScreen({
@@ -94,6 +95,21 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                     ),
                   ],
                 ),
+                ListItem(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const FaIcon(FontAwesomeIcons.chrome),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const FaIcon(FontAwesomeIcons.twitter),
+                      ),
+                    ],
+                  ),
+                ]),
               ],
             ),
           );

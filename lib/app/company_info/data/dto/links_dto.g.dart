@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'links.dart';
+part of 'links_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Links _$LinksFromJson(Map<String, dynamic> json) => Links(
+LinksDTO _$LinksDTOFromJson(Map<String, dynamic> json) => LinksDTO(
       website: json['website'] as String,
       twitter: json['twitter'] as String,
     );
 
-Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
+Map<String, dynamic> _$LinksDTOToJson(LinksDTO instance) => <String, dynamic>{
       'website': instance.website,
       'twitter': instance.twitter,
     };

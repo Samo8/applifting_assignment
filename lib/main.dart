@@ -1,5 +1,4 @@
-import 'package:applifting_assignment/app/company_info/bloc/company_info_bloc.dart';
-
+import 'package:applifting_assignment/app/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/home_screen.dart';
 import 'package:flutter/material.dart';

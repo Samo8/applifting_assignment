@@ -1,6 +1,6 @@
-import 'package:applifting_assignment/models/company_info.dart';
-import 'package:applifting_assignment/models/headquarters.dart';
-import 'package:applifting_assignment/models/links.dart';
+import 'package:applifting_assignment/app/company_info/domain/company_info.dart';
+import 'package:applifting_assignment/app/company_info/domain/headquarters.dart';
+import 'package:applifting_assignment/app/company_info/domain/links.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -22,7 +22,6 @@ class CompanyInfoBloc extends Bloc<CompanyInfoEvent, CompanyInfoState> {
           ),
           links: Links(website: 'web stranka', twitter: 'twitter'),
           name: 'SpaceX',
-          founder: 'Elon',
           founded: 1242144124,
           employees: 2,
           vehicles: 2,
@@ -30,10 +29,8 @@ class CompanyInfoBloc extends Bloc<CompanyInfoEvent, CompanyInfoState> {
           testSites: 3,
           ceo: 'Elon',
           cto: 'Elon',
-          coo: 'Elon',
           valuation: 2,
           summary: 'Long summary',
-          id: 'idcko',
         );
         emit(const CompanyInfoLoadedState(companyInfo));
       } catch (e) {
