@@ -26,7 +26,9 @@ class AppliftingApp extends StatelessWidget {
           create: (_) => HomeBloc(),
         ),
         BlocProvider(
-          create: (_) => CompanyInfoBloc(locator<ICompanyInfoService>()),
+          create: (_) => CompanyInfoBloc(
+            locator<ICompanyInfoService>(),
+          ),
         ),
       ],
       child: MaterialApp(

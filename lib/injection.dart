@@ -21,24 +21,14 @@ Future<void> configureDependencies() async {
     ),
   );
 
-  locator.registerLazySingleton<ICompanyInfoRemoteDataSource>(
-    () => CompanyInfoRemoteDataScoure(
-      locator<IHttpClient>(),
-    ),
-  );
   final prefs = await SharedPreferences.getInstance();
-  locator.registerLazySingleton<ICompanyInfoLocalDataSource>(
-    () => CompanyInfoLocalDataSource(prefs),
-  );
-  locator.registerLazySingleton<INetworkInfo>(
-    () => NetworkInfo(),
-  );
-
   locator.registerLazySingleton<ICompanyInfoRepository>(
     () => CompanyInfoRepository(
-      remoteDataSource: locator<ICompanyInfoRemoteDataSource>(),
-      localDataSource: locator<ICompanyInfoLocalDataSource>(),
-      networkInfo: locator<INetworkInfo>(),
+      remoteDataSource: CompanyInfoRemoteDataScoure(
+        locator<IHttpClient>(),
+      ),
+      localDataSource: CompanyInfoLocalDataSource(prefs),
+      networkInfo: NetworkInfo(),
     ),
   );
 
