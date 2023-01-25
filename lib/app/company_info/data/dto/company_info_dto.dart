@@ -14,11 +14,15 @@ class CompanyInfoDTO extends Equatable {
   final int founded;
   final int employees;
   final int vehicles;
+  @JsonKey(name: 'launch_sites')
   final int launchSites;
+  @JsonKey(name: 'test_sites')
   final int testSites;
   final String ceo;
   final String cto;
   final String coo;
+  @JsonKey(name: 'cto_propulsion')
+  final String ctoPropulsion;
   final int valuation;
   final String summary;
   final String id;
@@ -36,6 +40,7 @@ class CompanyInfoDTO extends Equatable {
     required this.ceo,
     required this.cto,
     required this.coo,
+    required this.ctoPropulsion,
     required this.valuation,
     required this.summary,
     required this.id,
@@ -58,6 +63,7 @@ class CompanyInfoDTO extends Equatable {
         ceo,
         cto,
         coo,
+        ctoPropulsion,
         valuation,
         summary,
         id,

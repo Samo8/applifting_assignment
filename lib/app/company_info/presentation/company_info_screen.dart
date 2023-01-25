@@ -32,7 +32,18 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
           );
         } else if (state is CompanyInfoErrorState) {
           return Center(
-            child: Text(state.error),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(state.error),
+                IconButton(
+                  onPressed: () => _companyInfoBloc.add(
+                    const CompanyInfoFetchDataEvent(),
+                  ),
+                  icon: const Icon(Icons.refresh),
+                ),
+              ],
+            ),
           );
         } else if (state is CompanyInfoLoadedState) {
           final companyInfo = state.companyInfo;
