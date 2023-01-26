@@ -1,38 +1,47 @@
 part of 'launch_bloc.dart';
 
-abstract class LaunchState extends Equatable {
-  const LaunchState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class LaunchInitial extends LaunchState {
-  const LaunchInitial();
-}
-
-class LaunchLoadingState extends LaunchState {
-  const LaunchLoadingState();
-}
-
-class LaunchLoadedState extends LaunchState {
+class LaunchState extends Equatable {
+  final List<Launch> upcomingLaunchesUnfiltered;
+  final List<Launch> pastLaunchesUnfiltered;
   final List<Launch> upcomingLaunches;
   final List<Launch> pastLaunches;
-
-  const LaunchLoadedState({
-    required this.upcomingLaunches,
-    required this.pastLaunches,
-  });
-
-  @override
-  List<Object> get props => [upcomingLaunches, pastLaunches];
-}
-
-class LaunchErrorState extends LaunchState {
+  final bool isLoading;
   final String error;
 
-  const LaunchErrorState(this.error);
+  const LaunchState({
+    this.upcomingLaunchesUnfiltered = const [],
+    this.pastLaunchesUnfiltered = const [],
+    this.upcomingLaunches = const [],
+    this.pastLaunches = const [],
+    this.isLoading = false,
+    this.error = '',
+  });
+
+  LaunchState copyWith({
+    List<Launch>? upcomingLaunchesUnfiltered,
+    List<Launch>? pastLaunchesUnfiltered,
+    List<Launch>? upcomingLaunches,
+    List<Launch>? pastLaunches,
+    bool? isLoading,
+    String? error,
+  }) {
+    return LaunchState(
+      upcomingLaunchesUnfiltered: upcomingLaunchesUnfiltered ?? this.upcomingLaunchesUnfiltered,
+      pastLaunchesUnfiltered: pastLaunchesUnfiltered ?? this.pastLaunchesUnfiltered,
+      upcomingLaunches: upcomingLaunches ?? this.upcomingLaunches,
+      pastLaunches: pastLaunches ?? this.pastLaunches,
+      isLoading: isLoading ?? this.isLoading,
+      error: error ?? this.error,
+    );
+  }
 
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [
+        upcomingLaunchesUnfiltered,
+        pastLaunchesUnfiltered,
+        upcomingLaunches,
+        pastLaunches,
+        isLoading,
+        error,
+      ];
 }

@@ -10,3 +10,11 @@ abstract class LaunchEvent extends Equatable {
 class LaunchFetchDataEvent extends LaunchEvent {
   const LaunchFetchDataEvent();
 }
+
+class LaunchSearchEvent extends LaunchEvent {
+  final String filter;
+
+  const LaunchSearchEvent(this.filter);
+  @override
+  List<Object> get props => [filter];
+}

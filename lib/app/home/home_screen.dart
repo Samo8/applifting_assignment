@@ -24,10 +24,9 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is HomeStateCompanyInfo) {
                 return const CompanyInfoScreen();
-              } else if (state is HomeStateLaunches) {
+              } else {
                 return const LaunchScreen();
               }
-              return const CompanyInfoScreen();
             },
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -40,10 +39,6 @@ class HomeScreen extends StatelessWidget {
                 icon: Icon(Icons.rocket),
                 label: 'Launches',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.history),
-                label: 'History',
-              ),
             ],
             currentIndex: state.bottomNavBarItem.index,
             onTap: (int index) {
@@ -52,10 +47,8 @@ class HomeScreen extends StatelessWidget {
 
               if (selectedItem == BottomNavBarItem.companyInfo) {
                 homeBloc.add(const HomeCompanyInfoEvent());
-              } else if (selectedItem == BottomNavBarItem.launches) {
-                homeBloc.add(const HomeLaunchesEvent());
               } else {
-                homeBloc.add(const HomeHistoryEvent());
+                homeBloc.add(const HomeLaunchesEvent());
               }
             },
           ),

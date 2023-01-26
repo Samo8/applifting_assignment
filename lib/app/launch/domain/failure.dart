@@ -1,9 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'failure.g.dart';
-
-@JsonSerializable()
 class Failure extends Equatable {
   final num time;
   final num? altitude;
@@ -15,8 +11,17 @@ class Failure extends Equatable {
     required this.reason,
   });
 
-  factory Failure.fromJson(Map<String, dynamic> json) => _$FailureFromJson(json);
-  Map<String, dynamic> toJson() => _$FailureToJson(this);
+  Failure copyWith({
+    num? time,
+    num? altitude,
+    String? reason,
+  }) {
+    return Failure(
+      time: time ?? this.time,
+      altitude: altitude ?? this.altitude,
+      reason: reason ?? this.reason,
+    );
+  }
 
   @override
   List<Object?> get props => [time, altitude, reason];

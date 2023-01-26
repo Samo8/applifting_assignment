@@ -48,6 +48,7 @@ dependencies:
   http: ^0.13.5
 
   internet_connection_checker: ^1.0.0+1
+  intl: ^0.18.0
 
   json_annotation: ^4.8.0
   

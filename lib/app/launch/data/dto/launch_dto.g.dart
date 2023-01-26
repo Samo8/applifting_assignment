@@ -24,7 +24,7 @@ LaunchDTO _$LaunchDTOFromJson(Map<String, dynamic> json) => LaunchDTO(
       launchpad: json['launchpad'] as String?,
       flightNumber: json['flight_number'] as int?,
       name: json['name'] as String,
-      dateUTC: json['date_utc'] as String,
+      date: LaunchDTO._dateFromJson(json['date_unix'] as int),
       id: json['id'] as String,
     );
 
@@ -40,6 +40,6 @@ Map<String, dynamic> _$LaunchDTOToJson(LaunchDTO instance) => <String, dynamic>{
       'launchpad': instance.launchpad,
       'flight_number': instance.flightNumber,
       'name': instance.name,
-      'date_utc': instance.dateUTC,
+      'date_unix': LaunchDTO._dateToJson(instance.date),
       'id': instance.id,
     };

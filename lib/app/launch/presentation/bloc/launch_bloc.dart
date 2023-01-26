@@ -9,9 +9,11 @@ part 'launch_state.dart';
 class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
   final ILaunchService launchesService;
 
-  LaunchBloc(this.launchesService) : super(const LaunchInitial()) {
+  LaunchBloc(this.launchesService) : super(const LaunchState()) {
     on<LaunchFetchDataEvent>((event, emit) async {
-      emit(const LaunchLoadingState());
+      emit(
+        state.copyWith(isLoading: true),
+      );
 
       try {
         final data = await Future.wait([
@@ -22,14 +24,41 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
         final pastLaunches = data[1];
 
         emit(
-          LaunchLoadedState(
+          state.copyWith(
+            upcomingLaunchesUnfiltered: upcomingLaunches,
+            pastLaunchesUnfiltered: pastLaunches,
             upcomingLaunches: upcomingLaunches,
             pastLaunches: pastLaunches,
+            isLoading: false,
+            error: '',
           ),
         );
       } catch (e) {
-        emit(LaunchErrorState(e.toString()));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            error: e.toString(),
+          ),
+        );
       }
+    });
+    on<LaunchSearchEvent>((event, emit) {
+      emit(
+        state.copyWith(
+          upcomingLaunches: event.filter.isEmpty
+              ? state.upcomingLaunches
+              : launchesService.search(
+                  launches: state.upcomingLaunchesUnfiltered,
+                  filter: event.filter,
+                ),
+          pastLaunches: event.filter.isEmpty
+              ? state.pastLaunchesUnfiltered
+              : launchesService.search(
+                  launches: state.pastLaunchesUnfiltered,
+                  filter: event.filter,
+                ),
+        ),
+      );
     });
   }
 }

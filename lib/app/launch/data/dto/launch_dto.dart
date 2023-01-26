@@ -1,11 +1,12 @@
 import 'package:applifting_assignment/app/launch/data/dto/crew_dto.dart';
 import 'package:applifting_assignment/app/launch/data/dto/failure_dto.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'launch_dto.g.dart';
 
 @JsonSerializable()
-class LaunchDTO {
+class LaunchDTO extends Equatable {
   final String? rocket;
   final bool? success;
   final List<FailureDTO> failures;
@@ -18,8 +19,8 @@ class LaunchDTO {
   @JsonKey(name: 'flight_number')
   final int? flightNumber;
   final String name;
-  @JsonKey(name: 'date_utc')
-  final String dateUTC;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson, name: 'date_unix')
+  final DateTime date;
   final String id;
 
   const LaunchDTO({
@@ -34,10 +35,30 @@ class LaunchDTO {
     this.launchpad,
     this.flightNumber,
     required this.name,
-    required this.dateUTC,
+    required this.date,
     required this.id,
   });
 
   factory LaunchDTO.fromJson(Map<String, dynamic> json) => _$LaunchDTOFromJson(json);
   Map<String, dynamic> toJson() => _$LaunchDTOToJson(this);
+
+  @override
+  List<Object?> get props => [
+        rocket,
+        success,
+        failures,
+        details,
+        crew,
+        ships,
+        capsules,
+        payloads,
+        launchpad,
+        flightNumber,
+        name,
+        date,
+        id,
+      ];
+
+  static DateTime _dateFromJson(int date) => DateTime.fromMillisecondsSinceEpoch(date * 1000);
+  static int _dateToJson(DateTime date) => date.millisecondsSinceEpoch;
 }

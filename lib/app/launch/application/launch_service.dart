@@ -22,6 +22,19 @@ class LaunchService implements ILaunchService {
     return _getLaunchesFromLauchesDTOs(pastLaunches);
   }
 
+  @override
+  List<Launch> search({
+    required List<Launch> launches,
+    required String filter,
+  }) {
+    return launches
+        .where((element) =>
+            element.name.contains(filter) ||
+            element.id.contains(filter) ||
+            (element.rocket?.contains(filter) ?? false))
+        .toList();
+  }
+
   List<Launch> _getLaunchesFromLauchesDTOs(List<LaunchDTO> launches) => launches
       .map((launch) => Launch(
             failures: launch.failures
@@ -41,7 +54,7 @@ class LaunchService implements ILaunchService {
             capsules: launch.capsules,
             payloads: launch.payloads,
             name: launch.name,
-            dateUTC: launch.dateUTC,
+            date: launch.date,
             id: launch.id,
             details: launch.details,
             flightNumber: launch.flightNumber,
