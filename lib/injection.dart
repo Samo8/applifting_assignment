@@ -4,6 +4,10 @@ import 'package:applifting_assignment/app/company_info/data/datasources/company_
 import 'package:applifting_assignment/app/company_info/data/datasources/company_info_remote_datasource.dart';
 import 'package:applifting_assignment/app/company_info/data/repository/company_info_repository.dart';
 import 'package:applifting_assignment/app/company_info/data/repository/company_info_repository_interface.dart';
+import 'package:applifting_assignment/app/launch/application/launch_service.dart';
+import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
+import 'package:applifting_assignment/app/launch/data/repository/launch_repository.dart';
+import 'package:applifting_assignment/app/launch/data/repository/launch_repository_interface.dart';
 import 'package:applifting_assignment/core/network_info.dart';
 import 'package:applifting_assignment/http/custom_http_client.dart';
 import 'package:applifting_assignment/http/http_client_interface.dart';
@@ -31,8 +35,18 @@ Future<void> configureDependencies() async {
       networkInfo: NetworkInfo(),
     ),
   );
-
   locator.registerLazySingleton<ICompanyInfoService>(
     () => CompanyInfoService(locator<ICompanyInfoRepository>()),
+  );
+
+  locator.registerLazySingleton<ILaunchRepository>(
+    () => LaunchRepository(
+      locator<IHttpClient>(),
+    ),
+  );
+  locator.registerLazySingleton<ILaunchService>(
+    () => LaunchService(
+      locator<ILaunchRepository>(),
+    ),
   );
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:applifting_assignment/app/launches/data/dto/launch_dto.dart';
-import 'package:applifting_assignment/app/launches/data/repository/launch_repository_interface.dart';
+import 'package:applifting_assignment/app/launch/data/dto/launch_dto.dart';
+import 'package:applifting_assignment/app/launch/data/repository/launch_repository_interface.dart';
 import 'package:applifting_assignment/http/http_client_interface.dart';
 import 'package:http/http.dart';
 

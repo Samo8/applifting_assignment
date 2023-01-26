@@ -1,16 +1,16 @@
-import 'package:applifting_assignment/app/launches/domain/crew.dart';
-import 'package:applifting_assignment/app/launches/domain/failure.dart';
+import 'package:applifting_assignment/app/launch/data/dto/crew_dto.dart';
+import 'package:applifting_assignment/app/launch/data/dto/failure_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'launch.g.dart';
+part 'launch_dto.g.dart';
 
 @JsonSerializable()
-class Launch {
+class LaunchDTO {
   final String? rocket;
   final bool? success;
-  final List<Failure> failures;
+  final List<FailureDTO> failures;
   final String? details;
-  final List<Crew> crew;
+  final List<CrewDTO> crew;
   final List<String> ships;
   final List<String> capsules;
   final List<String> payloads;
@@ -22,7 +22,7 @@ class Launch {
   final String dateUTC;
   final String id;
 
-  const Launch({
+  const LaunchDTO({
     this.rocket,
     this.success,
     required this.failures,
@@ -38,6 +38,6 @@ class Launch {
     required this.id,
   });
 
-  factory Launch.fromJson(Map<String, dynamic> json) => _$LaunchFromJson(json);
-  Map<String, dynamic> toJson() => _$LaunchToJson(this);
+  factory LaunchDTO.fromJson(Map<String, dynamic> json) => _$LaunchDTOFromJson(json);
+  Map<String, dynamic> toJson() => _$LaunchDTOToJson(this);
 }

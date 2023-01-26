@@ -1,6 +1,7 @@
 import 'package:applifting_assignment/app/company_info/presentation/company_info_screen.dart';
 import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/enums/bottom_nav_bar_item.dart';
+import 'package:applifting_assignment/app/launch/presentation/launch_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,8 +24,8 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is HomeStateCompanyInfo) {
                 return const CompanyInfoScreen();
-              } else if (state is HomeStateHistory) {
-                return const CompanyInfoScreen();
+              } else if (state is HomeStateLaunches) {
+                return const LaunchScreen();
               }
               return const CompanyInfoScreen();
             },

@@ -2,6 +2,8 @@ import 'package:applifting_assignment/app/company_info/application/company_info_
 import 'package:applifting_assignment/app/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/home_screen.dart';
+import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
+import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
 import 'package:applifting_assignment/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +30,11 @@ class AppliftingApp extends StatelessWidget {
         BlocProvider(
           create: (_) => CompanyInfoBloc(
             locator<ICompanyInfoService>(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => LaunchBloc(
+            locator<ILaunchService>(),
           ),
         ),
       ],

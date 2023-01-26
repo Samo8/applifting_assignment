@@ -6,7 +6,7 @@ part 'failure.g.dart';
 @JsonSerializable()
 class Failure extends Equatable {
   final num time;
-  final num altitude;
+  final num? altitude;
   final String reason;
 
   const Failure({
@@ -19,5 +19,5 @@ class Failure extends Equatable {
   Map<String, dynamic> toJson() => _$FailureToJson(this);
 
   @override
-  List<Object> get props => [time, altitude, reason];
+  List<Object?> get props => [time, altitude, reason];
 }
