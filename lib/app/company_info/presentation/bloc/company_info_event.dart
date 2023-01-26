@@ -10,3 +10,12 @@ abstract class CompanyInfoEvent extends Equatable {
 class CompanyInfoFetchDataEvent extends CompanyInfoEvent {
   const CompanyInfoFetchDataEvent();
 }
+
+class CompanyInfoOpenWebPageEvent extends CompanyInfoEvent {
+  final String url;
+
+  const CompanyInfoOpenWebPageEvent(this.url);
+
+  @override
+  List<Object> get props => [url];
+}

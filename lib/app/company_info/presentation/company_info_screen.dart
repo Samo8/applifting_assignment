@@ -111,11 +111,19 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => _companyInfoBloc.add(
+                          CompanyInfoOpenWebPageEvent(
+                            state.companyInfo.links.website,
+                          ),
+                        ),
                         icon: const FaIcon(FontAwesomeIcons.chrome),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => _companyInfoBloc.add(
+                          CompanyInfoOpenWebPageEvent(
+                            state.companyInfo.links.twitter,
+                          ),
+                        ),
                         icon: const FaIcon(FontAwesomeIcons.twitter),
                       ),
                     ],

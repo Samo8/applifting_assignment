@@ -23,5 +23,8 @@ class CompanyInfoBloc extends Bloc<CompanyInfoEvent, CompanyInfoState> {
         emit(CompanyInfoErrorState(e.toString()));
       }
     });
+    on<CompanyInfoOpenWebPageEvent>(
+      (event, _) async => await companyInfoService.openWebPage(event.url),
+    );
   }
 }

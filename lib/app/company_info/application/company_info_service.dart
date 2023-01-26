@@ -3,6 +3,7 @@ import 'package:applifting_assignment/app/company_info/data/repository/company_i
 import 'package:applifting_assignment/app/company_info/domain/company_info.dart';
 import 'package:applifting_assignment/app/company_info/domain/headquarters.dart';
 import 'package:applifting_assignment/app/company_info/domain/links.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CompanyInfoService implements ICompanyInfoService {
   final ICompanyInfoRepository companyInfoRepository;
@@ -37,5 +38,10 @@ class CompanyInfoService implements ICompanyInfoService {
       valuation: companyInfoDTO.valuation,
       summary: companyInfoDTO.summary,
     );
+  }
+
+  @override
+  Future<void> openWebPage(String url) async {
+    await launchUrl(Uri.parse(url));
   }
 }
