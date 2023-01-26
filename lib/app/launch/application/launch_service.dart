@@ -4,6 +4,7 @@ import 'package:applifting_assignment/app/launch/data/repository/launch_reposito
 import 'package:applifting_assignment/app/launch/domain/crew.dart';
 import 'package:applifting_assignment/app/launch/domain/failure.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
+import 'package:remove_diacritic/remove_diacritic.dart';
 
 class LaunchService implements ILaunchService {
   final ILaunchRepository launchRepository;
@@ -27,11 +28,14 @@ class LaunchService implements ILaunchService {
     required List<Launch> launches,
     required String filter,
   }) {
+    filter = removeDiacritics(filter.toLowerCase());
     return launches
         .where((element) =>
-            element.name.contains(filter) ||
-            element.id.contains(filter) ||
-            (element.rocket?.contains(filter) ?? false))
+            removeDiacritics(element.name.toLowerCase()).contains(filter) ||
+            removeDiacritics(element.id..toLowerCase()).contains(filter) ||
+            (element.rocket != null
+                ? (removeDiacritics(element.rocket!.toLowerCase()).contains(filter))
+                : false))
         .toList();
   }
 

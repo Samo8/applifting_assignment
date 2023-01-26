@@ -43,19 +43,21 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
       }
     });
     on<LaunchSearchEvent>((event, emit) {
+      final filter = event.filter;
+
       emit(
         state.copyWith(
-          upcomingLaunches: event.filter.isEmpty
-              ? state.upcomingLaunches
+          upcomingLaunches: filter.isEmpty
+              ? state.upcomingLaunchesUnfiltered
               : launchesService.search(
                   launches: state.upcomingLaunchesUnfiltered,
-                  filter: event.filter,
+                  filter: filter,
                 ),
-          pastLaunches: event.filter.isEmpty
+          pastLaunches: filter.isEmpty
               ? state.pastLaunchesUnfiltered
               : launchesService.search(
                   launches: state.pastLaunchesUnfiltered,
-                  filter: event.filter,
+                  filter: filter,
                 ),
         ),
       );

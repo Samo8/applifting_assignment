@@ -4,6 +4,7 @@ import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/home_screen.dart';
 import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
+import 'package:applifting_assignment/constants/custom_theme.dart';
 import 'package:applifting_assignment/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,9 +41,8 @@ class AppliftingApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Applifting SpaceX',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: CustomTheme.lightTheme,
+        darkTheme: CustomTheme.darkTheme,
         home: const HomeScreen(),
       ),
     );
