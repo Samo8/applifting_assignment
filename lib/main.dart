@@ -4,6 +4,7 @@ import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/home_screen.dart';
 import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
+import 'package:applifting_assignment/app/launch/presentation/launch_detail_screen.dart';
 import 'package:applifting_assignment/constants/custom_theme.dart';
 import 'package:applifting_assignment/injection.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,35 @@ class AppliftingApp extends StatelessWidget {
         theme: CustomTheme.lightTheme,
         darkTheme: CustomTheme.darkTheme,
         home: const HomeScreen(),
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case HomeScreen.routeName:
+              return MaterialPageRoute(
+                settings: const RouteSettings(
+                  name: HomeScreen.routeName,
+                ),
+                builder: (_) => const HomeScreen(),
+              );
+            case LaunchDetailScreen.routeName:
+              final launchDetailScreenArgs = settings.arguments as LaunchDetailScreenArgs;
+
+              return MaterialPageRoute(
+                settings: const RouteSettings(
+                  name: LaunchDetailScreen.routeName,
+                ),
+                builder: (_) => LaunchDetailScreen(
+                  args: launchDetailScreenArgs,
+                ),
+              );
+            default:
+              return MaterialPageRoute(
+                settings: const RouteSettings(
+                  name: HomeScreen.routeName,
+                ),
+                builder: (_) => const HomeScreen(),
+              );
+          }
+        },
       ),
     );
   }

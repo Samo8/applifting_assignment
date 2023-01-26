@@ -1,5 +1,6 @@
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
+import 'package:applifting_assignment/app/launch/presentation/launch_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -127,20 +128,26 @@ class LaunchScreenBody extends StatelessWidget {
         ),
         child: ListView.builder(
           itemBuilder: (context, index) {
-            final pastLaunch = launches[index];
+            final launch = launches[index];
 
             return ListTile(
-              title: Text(
-                pastLaunch.name,
-                style: TextStyle(
-                  color: pastLaunch.success != null
-                      ? (pastLaunch.success! ? Colors.green : Colors.red)
-                      : null,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => LaunchDetailScreen(
+                    args: LaunchDetailScreenArgs(launch),
+                  ),
                 ),
               ),
-              subtitle: Text(_dateFormat.format(pastLaunch.date)),
+              title: Text(
+                launch.name,
+                style: TextStyle(
+                  color:
+                      launch.success != null ? (launch.success! ? Colors.green : Colors.red) : null,
+                ),
+              ),
+              subtitle: Text(_dateFormat.format(launch.date)),
               trailing: Text(
-                pastLaunch.flightNumber?.toString() ?? '',
+                launch.flightNumber?.toString() ?? '',
               ),
             );
           },
