@@ -35,7 +35,10 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(state.error),
+                Text(
+                  state.error,
+                  textAlign: TextAlign.center,
+                ),
                 IconButton(
                   onPressed: () => _companyInfoBloc.add(
                     const CompanyInfoFetchDataEvent(),
