@@ -26,6 +26,7 @@ LaunchDTO _$LaunchDTOFromJson(Map<String, dynamic> json) => LaunchDTO(
       name: json['name'] as String,
       date: LaunchDTO._dateFromJson(json['date_unix'] as int),
       id: json['id'] as String,
+      links: LinksDTO.fromJson(json['links'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LaunchDTOToJson(LaunchDTO instance) => <String, dynamic>{
@@ -42,4 +43,5 @@ Map<String, dynamic> _$LaunchDTOToJson(LaunchDTO instance) => <String, dynamic>{
       'name': instance.name,
       'date_unix': LaunchDTO._dateToJson(instance.date),
       'id': instance.id,
+      'links': instance.links,
     };

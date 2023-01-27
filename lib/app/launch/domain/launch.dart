@@ -1,3 +1,4 @@
+import 'package:applifting_assignment/app/launch/domain/links.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:applifting_assignment/app/launch/domain/crew.dart';
@@ -17,6 +18,7 @@ class Launch extends Equatable {
   final String name;
   final DateTime date;
   final String id;
+  final Links links;
 
   const Launch({
     this.rocket,
@@ -32,6 +34,7 @@ class Launch extends Equatable {
     required this.name,
     required this.date,
     required this.id,
+    required this.links,
   });
 
   Launch copyWith({
@@ -48,6 +51,7 @@ class Launch extends Equatable {
     String? name,
     DateTime? date,
     String? id,
+    Links? links,
   }) {
     return Launch(
       rocket: rocket ?? this.rocket,
@@ -63,6 +67,7 @@ class Launch extends Equatable {
       name: name ?? this.name,
       date: date ?? this.date,
       id: id ?? this.id,
+      links: links ?? this.links,
     );
   }
 
@@ -81,5 +86,6 @@ class Launch extends Equatable {
         name,
         date,
         id,
+        links,
       ];
 }

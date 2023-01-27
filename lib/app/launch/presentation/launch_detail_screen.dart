@@ -16,6 +16,8 @@ class LaunchDetailScreen extends StatelessWidget {
 
   final LaunchDetailScreenArgs args;
 
+  Launch get launch => args.launch;
+
   const LaunchDetailScreen({
     required this.args,
     super.key,
@@ -26,8 +28,31 @@ class LaunchDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          args.launch.name,
+          launch.name,
         ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.only(top: 10.0),
+        children: [
+          if (launch.links.patch.small != null)
+            Image.network(
+              launch.links.patch.small!,
+              height: 150.0,
+              fit: BoxFit.fitHeight,
+              loadingBuilder:
+                  (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+            ),
+        ],
       ),
     );
   }

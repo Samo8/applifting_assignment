@@ -1,5 +1,6 @@
 import 'package:applifting_assignment/app/launch/data/dto/crew_dto.dart';
 import 'package:applifting_assignment/app/launch/data/dto/failure_dto.dart';
+import 'package:applifting_assignment/app/launch/data/dto/links_dto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -22,6 +23,7 @@ class LaunchDTO extends Equatable {
   @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson, name: 'date_unix')
   final DateTime date;
   final String id;
+  final LinksDTO links;
 
   const LaunchDTO({
     this.rocket,
@@ -37,6 +39,7 @@ class LaunchDTO extends Equatable {
     required this.name,
     required this.date,
     required this.id,
+    required this.links,
   });
 
   factory LaunchDTO.fromJson(Map<String, dynamic> json) => _$LaunchDTOFromJson(json);
@@ -57,6 +60,7 @@ class LaunchDTO extends Equatable {
         name,
         date,
         id,
+        links,
       ];
 
   static DateTime _dateFromJson(int date) => DateTime.fromMillisecondsSinceEpoch(date * 1000);

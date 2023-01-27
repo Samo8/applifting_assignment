@@ -4,6 +4,8 @@ import 'package:applifting_assignment/app/launch/data/repository/launch_reposito
 import 'package:applifting_assignment/app/launch/domain/crew.dart';
 import 'package:applifting_assignment/app/launch/domain/failure.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
+import 'package:applifting_assignment/app/launch/domain/links.dart';
+import 'package:applifting_assignment/app/launch/domain/patch.dart';
 import 'package:remove_diacritic/remove_diacritic.dart';
 
 class LaunchService implements ILaunchService {
@@ -40,31 +42,38 @@ class LaunchService implements ILaunchService {
   }
 
   List<Launch> _getLaunchesFromLauchesDTOs(List<LaunchDTO> launches) => launches
-      .map((launch) => Launch(
-            failures: launch.failures
-                .map((failure) => Failure(
-                      time: failure.time,
-                      altitude: failure.altitude,
-                      reason: failure.reason,
-                    ))
-                .toList(),
-            crew: launch.crew
-                .map((c) => Crew(
-                      crew: c.crew,
-                      role: c.role,
-                    ))
-                .toList(),
-            ships: launch.ships,
-            capsules: launch.capsules,
-            payloads: launch.payloads,
-            name: launch.name,
-            date: launch.date,
-            id: launch.id,
-            details: launch.details,
-            flightNumber: launch.flightNumber,
-            launchpad: launch.launchpad,
-            rocket: launch.rocket,
-            success: launch.success,
-          ))
+      .map(
+        (launch) => Launch(
+          failures: launch.failures
+              .map((failure) => Failure(
+                    time: failure.time,
+                    altitude: failure.altitude,
+                    reason: failure.reason,
+                  ))
+              .toList(),
+          crew: launch.crew
+              .map((c) => Crew(
+                    crew: c.crew,
+                    role: c.role,
+                  ))
+              .toList(),
+          ships: launch.ships,
+          capsules: launch.capsules,
+          payloads: launch.payloads,
+          name: launch.name,
+          date: launch.date,
+          id: launch.id,
+          details: launch.details,
+          flightNumber: launch.flightNumber,
+          launchpad: launch.launchpad,
+          rocket: launch.rocket,
+          success: launch.success,
+          links: Links(
+            patch: Patch(
+              small: launch.links.patch.small,
+            ),
+          ),
+        ),
+      )
       .toList();
 }
