@@ -6,6 +6,7 @@ import 'package:applifting_assignment/app/launch/domain/failure.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/domain/links.dart';
 import 'package:applifting_assignment/app/launch/domain/patch.dart';
+import 'package:intl/intl.dart';
 import 'package:remove_diacritic/remove_diacritic.dart';
 
 class LaunchService implements ILaunchService {
@@ -76,4 +77,10 @@ class LaunchService implements ILaunchService {
         ),
       )
       .toList();
+
+  @override
+  String formatDate(DateTime dateTime) {
+    final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
+    return dateFormat.format(dateTime);
+  }
 }

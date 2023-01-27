@@ -3,7 +3,6 @@ import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.d
 import 'package:applifting_assignment/app/launch/presentation/launch_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class LaunchScreen extends StatefulWidget {
   const LaunchScreen({
@@ -82,14 +81,12 @@ class _LaunchScreenState extends State<LaunchScreen> {
 }
 
 class LaunchScreenBody extends StatelessWidget {
-  final _dateFormat = DateFormat('dd.MM.yyyy HH:mm');
-
   final LaunchBloc launchBloc;
   final bool isLoading;
   final String error;
   final List<Launch> launches;
 
-  LaunchScreenBody({
+  const LaunchScreenBody({
     required this.launchBloc,
     required this.isLoading,
     required this.error,
@@ -145,7 +142,9 @@ class LaunchScreenBody extends StatelessWidget {
                       launch.success != null ? (launch.success! ? Colors.green : Colors.red) : null,
                 ),
               ),
-              subtitle: Text(_dateFormat.format(launch.date)),
+              subtitle: Text(
+                launchBloc.launchesService.formatDate(launch.date),
+              ),
               trailing: Text(
                 launch.flightNumber?.toString() ?? '',
               ),
