@@ -17,10 +17,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         const HomeStateLaunches(BottomNavBarItem.launches),
       ),
     );
-    on<HomeHistoryEvent>(
-      (_, emit) => emit(
-        const HomeStateHistory(BottomNavBarItem.history),
-      ),
-    );
   }
 }

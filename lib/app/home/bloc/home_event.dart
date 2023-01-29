@@ -14,7 +14,3 @@ class HomeCompanyInfoEvent extends HomeEvent {
 class HomeLaunchesEvent extends HomeEvent {
   const HomeLaunchesEvent();
 }
-
-class HomeHistoryEvent extends HomeEvent {
-  const HomeHistoryEvent();
-}

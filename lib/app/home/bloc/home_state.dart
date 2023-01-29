@@ -16,7 +16,3 @@ class HomeStateCompanyInfo extends HomeState {
 class HomeStateLaunches extends HomeState {
   const HomeStateLaunches(super.bottomNavBarItem);
 }
-
-class HomeStateHistory extends HomeState {
-  const HomeStateHistory(super.bottomNavBarItem);
-}

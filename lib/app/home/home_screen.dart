@@ -1,10 +1,13 @@
 import 'package:applifting_assignment/app/company_info/presentation/company_info_screen.dart';
 import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/enums/bottom_nav_bar_item.dart';
+import 'package:applifting_assignment/app/launch/presentation/launch_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = '/home';
+
   const HomeScreen({
     super.key,
   });
@@ -23,10 +26,9 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is HomeStateCompanyInfo) {
                 return const CompanyInfoScreen();
-              } else if (state is HomeStateHistory) {
-                return const CompanyInfoScreen();
+              } else {
+                return const LaunchScreen();
               }
-              return const CompanyInfoScreen();
             },
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -39,10 +41,6 @@ class HomeScreen extends StatelessWidget {
                 icon: Icon(Icons.rocket),
                 label: 'Launches',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.history),
-                label: 'History',
-              ),
             ],
             currentIndex: state.bottomNavBarItem.index,
             onTap: (int index) {
@@ -51,10 +49,8 @@ class HomeScreen extends StatelessWidget {
 
               if (selectedItem == BottomNavBarItem.companyInfo) {
                 homeBloc.add(const HomeCompanyInfoEvent());
-              } else if (selectedItem == BottomNavBarItem.launches) {
-                homeBloc.add(const HomeLaunchesEvent());
               } else {
-                homeBloc.add(const HomeHistoryEvent());
+                homeBloc.add(const HomeLaunchesEvent());
               }
             },
           ),

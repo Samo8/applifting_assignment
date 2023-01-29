@@ -1,7 +1,6 @@
 enum BottomNavBarItem {
   companyInfo,
-  launches,
-  history;
+  launches;
 
   const BottomNavBarItem();
 }
