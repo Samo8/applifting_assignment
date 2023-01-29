@@ -32,13 +32,15 @@ class LaunchService implements ILaunchService {
     required String filter,
   }) {
     filter = removeDiacritics(filter.toLowerCase());
+    int? filterYear = int.tryParse(filter);
     return launches
         .where((element) =>
             removeDiacritics(element.name.toLowerCase()).contains(filter) ||
             removeDiacritics(element.id..toLowerCase()).contains(filter) ||
             (element.rocket != null
                 ? (removeDiacritics(element.rocket!.toLowerCase()).contains(filter))
-                : false))
+                : false) ||
+            (filterYear != null && filterYear == element.date.year))
         .toList();
   }
 

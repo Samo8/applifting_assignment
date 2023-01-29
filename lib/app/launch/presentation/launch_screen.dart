@@ -162,8 +162,16 @@ class LaunchScreenBody extends StatelessWidget {
                       launch.success != null ? (launch.success! ? Colors.green : Colors.red) : null,
                 ),
               ),
-              subtitle: Text(
-                launchBloc.launchesService.formatDate(launch.date),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    launchBloc.launchesService.formatDate(launch.date),
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text('id: ${launch.id}'),
+                ],
               ),
               trailing: Text(
                 launch.flightNumber?.toString() ?? '',
