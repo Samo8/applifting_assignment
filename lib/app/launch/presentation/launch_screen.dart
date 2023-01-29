@@ -14,6 +14,7 @@ class LaunchScreen extends StatefulWidget {
 }
 
 class _LaunchScreenState extends State<LaunchScreen> {
+  final _searchTextController = TextEditingController();
   late final LaunchBloc _launchBloc;
 
   @override
@@ -29,10 +30,29 @@ class _LaunchScreenState extends State<LaunchScreen> {
       builder: (context, state) {
         return Column(
           children: [
-            TextField(
-              autocorrect: false,
-              onChanged: (value) => _launchBloc.add(
-                LaunchSearchEvent(value),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 5.0,
+              ),
+              child: TextField(
+                autocorrect: false,
+                controller: _searchTextController,
+                onChanged: (value) => _launchBloc.add(
+                  LaunchSearchEvent(value),
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _searchTextController.clear();
+                      _launchBloc.add(
+                        const LaunchClearSearchEvent(),
+                      );
+                    },
+                    icon: const Icon(Icons.clear),
+                  ),
+                ),
               ),
             ),
             Expanded(

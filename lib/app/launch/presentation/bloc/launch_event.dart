@@ -18,3 +18,7 @@ class LaunchSearchEvent extends LaunchEvent {
   @override
   List<Object> get props => [filter];
 }
+
+class LaunchClearSearchEvent extends LaunchEvent {
+  const LaunchClearSearchEvent();
+}

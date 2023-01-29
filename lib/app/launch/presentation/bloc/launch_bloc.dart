@@ -27,8 +27,8 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
           state.copyWith(
             upcomingLaunchesUnfiltered: upcomingLaunches,
             pastLaunchesUnfiltered: pastLaunches,
-            upcomingLaunches: upcomingLaunches,
-            pastLaunches: pastLaunches,
+            upcomingLaunches: _applySearch(launches: upcomingLaunches, filter: state.filter),
+            pastLaunches: _applySearch(launches: pastLaunches, filter: state.filter),
             isLoading: false,
             error: '',
           ),
@@ -47,20 +47,37 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
 
       emit(
         state.copyWith(
-          upcomingLaunches: filter.isEmpty
-              ? state.upcomingLaunchesUnfiltered
-              : launchesService.search(
-                  launches: state.upcomingLaunchesUnfiltered,
-                  filter: filter,
-                ),
-          pastLaunches: filter.isEmpty
-              ? state.pastLaunchesUnfiltered
-              : launchesService.search(
-                  launches: state.pastLaunchesUnfiltered,
-                  filter: filter,
-                ),
+          upcomingLaunches: _applySearch(
+            launches: state.upcomingLaunchesUnfiltered,
+            filter: filter,
+          ),
+          pastLaunches: _applySearch(
+            launches: state.pastLaunchesUnfiltered,
+            filter: filter,
+          ),
+          filter: filter,
         ),
       );
     });
+    on<LaunchClearSearchEvent>(
+      (_, emit) => emit(
+        state.copyWith(
+          upcomingLaunches: state.upcomingLaunchesUnfiltered,
+          pastLaunches: state.pastLaunchesUnfiltered,
+          filter: '',
+        ),
+      ),
+    );
+  }
+  List<Launch> _applySearch({
+    required List<Launch> launches,
+    required String filter,
+  }) {
+    return filter.isEmpty
+        ? launches
+        : launchesService.search(
+            launches: launches,
+            filter: filter,
+          );
   }
 }
