@@ -6,6 +6,8 @@ import 'package:applifting_assignment/app/company_info/data/repository/company_i
 import 'package:applifting_assignment/app/company_info/data/repository/company_info_repository_interface.dart';
 import 'package:applifting_assignment/app/launch/application/launch_service.dart';
 import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
+import 'package:applifting_assignment/app/launch/data/datasource/launch_local_filter_datasource.dart';
+import 'package:applifting_assignment/app/launch/data/datasource/launch_remote_datasource.dart';
 import 'package:applifting_assignment/app/launch/data/repository/launch_repository.dart';
 import 'package:applifting_assignment/app/launch/data/repository/launch_repository_interface.dart';
 import 'package:applifting_assignment/core/network_info.dart';
@@ -41,7 +43,10 @@ Future<void> configureDependencies() async {
 
   locator.registerLazySingleton<ILaunchRepository>(
     () => LaunchRepository(
-      locator<IHttpClient>(),
+      launchRemoteDatasource: LaunchRemoteDataSource(
+        locator<IHttpClient>(),
+      ),
+      launchLocalFilterDatasource: LaunchLocalFilterDatasource(prefs),
     ),
   );
   locator.registerLazySingleton<ILaunchService>(

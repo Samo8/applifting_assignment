@@ -1,8 +1,11 @@
 import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
 import 'package:applifting_assignment/app/launch/data/dto/launch_dto.dart';
+import 'package:applifting_assignment/app/launch/data/dto/launch_filter_dto.dart';
 import 'package:applifting_assignment/app/launch/data/repository/launch_repository_interface.dart';
 import 'package:applifting_assignment/app/launch/domain/crew.dart';
+import 'package:applifting_assignment/app/launch/domain/enums/filter_by_enum.dart';
 import 'package:applifting_assignment/app/launch/domain/failure.dart';
+import 'package:applifting_assignment/app/launch/domain/filter.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/domain/links.dart';
 import 'package:applifting_assignment/app/launch/domain/patch.dart';
@@ -29,18 +32,19 @@ class LaunchService implements ILaunchService {
   @override
   List<Launch> search({
     required List<Launch> launches,
-    required String filter,
+    required String search,
   }) {
-    filter = removeDiacritics(filter.toLowerCase());
-    int? filterYear = int.tryParse(filter);
+    search = removeDiacritics(search.toLowerCase());
+    int? searchYear = int.tryParse(search);
+
     return launches
         .where((element) =>
-            removeDiacritics(element.name.toLowerCase()).contains(filter) ||
-            removeDiacritics(element.id..toLowerCase()).contains(filter) ||
+            removeDiacritics(element.name.toLowerCase()).contains(search) ||
+            removeDiacritics(element.id..toLowerCase()).contains(search) ||
             (element.rocket != null
-                ? (removeDiacritics(element.rocket!.toLowerCase()).contains(filter))
+                ? (removeDiacritics(element.rocket!.toLowerCase()).contains(search))
                 : false) ||
-            (filterYear != null && filterYear == element.date.year))
+            (searchYear != null && searchYear == element.date.year))
         .toList();
   }
 
@@ -81,8 +85,46 @@ class LaunchService implements ILaunchService {
       .toList();
 
   @override
+  Future<Filter> getLaunchFilter() async {
+    final launchFilterDTO = await launchRepository.fetchLaunchFilter();
+    if (launchFilterDTO != null) {
+      return Filter(
+        filterBy: launchFilterDTO.filterBy,
+        isDescending: launchFilterDTO.isDescending,
+      );
+    }
+    return const Filter.base();
+  }
+
+  @override
   String formatDate(DateTime dateTime) {
     final dateFormat = DateFormat('dd.MM.yyyy HH:mm');
     return dateFormat.format(dateTime);
+  }
+
+  @override
+  List<Launch> sortLaunches({
+    required List<Launch> launches,
+    required Filter filter,
+  }) {
+    int compare(Launch a, Launch b) {
+      switch (filter.filterBy) {
+        case FilterBy.id:
+          return filter.isDescending ? b.id.compareTo(a.id) : a.id.compareTo(b.id);
+        case FilterBy.date:
+          return filter.isDescending ? b.date.compareTo(a.date) : a.date.compareTo(b.date);
+        default:
+          return 0;
+      }
+    }
+
+    launchRepository.persistLaunchFilter(
+      LaunchFilterDTO(
+        filterBy: filter.filterBy,
+        isDescending: filter.isDescending,
+      ),
+    );
+
+    return [...launches]..sort(compare);
   }
 }

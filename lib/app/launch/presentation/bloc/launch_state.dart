@@ -7,7 +7,8 @@ class LaunchState extends Equatable {
   final List<Launch> pastLaunches;
   final bool isLoading;
   final String error;
-  final String filter;
+  final String search;
+  final Filter? filter;
 
   const LaunchState({
     this.upcomingLaunchesUnfiltered = const [],
@@ -16,7 +17,8 @@ class LaunchState extends Equatable {
     this.pastLaunches = const [],
     this.isLoading = false,
     this.error = '',
-    this.filter = '',
+    this.search = '',
+    this.filter,
   });
 
   LaunchState copyWith({
@@ -26,7 +28,8 @@ class LaunchState extends Equatable {
     List<Launch>? pastLaunches,
     bool? isLoading,
     String? error,
-    String? filter,
+    String? search,
+    Filter? filter,
   }) {
     return LaunchState(
       upcomingLaunchesUnfiltered: upcomingLaunchesUnfiltered ?? this.upcomingLaunchesUnfiltered,
@@ -35,18 +38,20 @@ class LaunchState extends Equatable {
       pastLaunches: pastLaunches ?? this.pastLaunches,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
+      search: search ?? this.search,
       filter: filter ?? this.filter,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         upcomingLaunchesUnfiltered,
         pastLaunchesUnfiltered,
         upcomingLaunches,
         pastLaunches,
         isLoading,
         error,
-        filter
+        search,
+        filter,
       ];
 }

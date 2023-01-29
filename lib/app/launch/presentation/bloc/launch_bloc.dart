@@ -1,4 +1,6 @@
 import 'package:applifting_assignment/app/launch/application/launch_service_interface.dart';
+import 'package:applifting_assignment/app/launch/domain/enums/filter_by_enum.dart';
+import 'package:applifting_assignment/app/launch/domain/filter.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -19,16 +21,27 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
         final data = await Future.wait([
           launchesService.getUpcomingLaunches(),
           launchesService.getPastLaunches(),
+          launchesService.getLaunchFilter(),
         ]);
-        final upcomingLaunches = data[0];
-        final pastLaunches = data[1];
+        final upcomingLaunches = data[0] as List<Launch>;
+        final pastLaunches = data[1] as List<Launch>;
+        final filter = data[2] as Filter;
 
         emit(
           state.copyWith(
             upcomingLaunchesUnfiltered: upcomingLaunches,
             pastLaunchesUnfiltered: pastLaunches,
-            upcomingLaunches: _applySearch(launches: upcomingLaunches, filter: state.filter),
-            pastLaunches: _applySearch(launches: pastLaunches, filter: state.filter),
+            upcomingLaunches: _sortLaunches(
+              launches: upcomingLaunches,
+              filter: filter,
+              search: state.search,
+            ),
+            pastLaunches: _sortLaunches(
+              launches: pastLaunches,
+              filter: filter,
+              search: state.search,
+            ),
+            filter: filter,
             isLoading: false,
             error: '',
           ),
@@ -43,41 +56,147 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
       }
     });
     on<LaunchSearchEvent>((event, emit) {
-      final filter = event.filter;
+      final search = event.search;
 
       emit(
         state.copyWith(
-          upcomingLaunches: _applySearch(
+          upcomingLaunches: _sortLaunches(
             launches: state.upcomingLaunchesUnfiltered,
-            filter: filter,
+            filter: state.filter,
+            search: search,
           ),
-          pastLaunches: _applySearch(
+          pastLaunches: _sortLaunches(
             launches: state.pastLaunchesUnfiltered,
-            filter: filter,
+            filter: state.filter,
+            search: search,
           ),
+          search: search,
+        ),
+      );
+    });
+    on<LaunchSortByLaunchIdEvent>((event, emit) {
+      final filter = state.filter?.copyWith(
+            filterBy: FilterBy.id,
+            isDescending: event.descending,
+          ) ??
+          Filter(
+            filterBy: FilterBy.id,
+            isDescending: event.descending,
+          );
+
+      final upcomingLaunches = _sortLaunches(
+        launches: state.upcomingLaunchesUnfiltered,
+        filter: filter,
+        search: state.search,
+      );
+      final pastLaunches = _sortLaunches(
+        launches: state.pastLaunchesUnfiltered,
+        filter: filter,
+        search: state.search,
+      );
+
+      emit(
+        state.copyWith(
+          upcomingLaunches: upcomingLaunches,
+          pastLaunches: pastLaunches,
           filter: filter,
         ),
       );
     });
+    on<LaunchSortByLaunchDateEvent>((event, emit) {
+      final filter = state.filter?.copyWith(
+            filterBy: FilterBy.date,
+            isDescending: event.descending,
+          ) ??
+          Filter(
+            filterBy: FilterBy.date,
+            isDescending: event.descending,
+          );
+      final upcomingLaunches = _sortLaunches(
+        launches: state.upcomingLaunchesUnfiltered,
+        filter: filter,
+        search: state.search,
+      );
+      final pastLaunches = _sortLaunches(
+        launches: state.pastLaunchesUnfiltered,
+        filter: filter,
+        search: state.search,
+      );
+
+      emit(
+        state.copyWith(
+          upcomingLaunches: upcomingLaunches,
+          pastLaunches: pastLaunches,
+          filter: filter,
+        ),
+      );
+    });
+    on<LaunchUpdateDescendingSortEvent>((event, emit) {
+      final filter = state.filter;
+
+      if (filter != null) {
+        if (filter.filterBy == FilterBy.id) {
+          add(
+            LaunchSortByLaunchIdEvent(
+              descending: !filter.isDescending,
+            ),
+          );
+        } else if (filter.filterBy == FilterBy.date) {
+          add(
+            LaunchSortByLaunchDateEvent(
+              descending: !filter.isDescending,
+            ),
+          );
+        }
+      }
+    });
     on<LaunchClearSearchEvent>(
       (_, emit) => emit(
         state.copyWith(
-          upcomingLaunches: state.upcomingLaunchesUnfiltered,
-          pastLaunches: state.pastLaunchesUnfiltered,
-          filter: '',
+          upcomingLaunches: state.filter != null
+              ? launchesService.sortLaunches(
+                  launches: state.upcomingLaunchesUnfiltered,
+                  filter: state.filter!,
+                )
+              : state.upcomingLaunchesUnfiltered,
+          pastLaunches: state.filter != null
+              ? launchesService.sortLaunches(
+                  launches: state.pastLaunchesUnfiltered,
+                  filter: state.filter!,
+                )
+              : state.pastLaunchesUnfiltered,
+          search: '',
         ),
       ),
     );
   }
   List<Launch> _applySearch({
     required List<Launch> launches,
-    required String filter,
+    required String search,
   }) {
-    return filter.isEmpty
+    return search.isEmpty
         ? launches
         : launchesService.search(
             launches: launches,
-            filter: filter,
+            search: search,
           );
+  }
+
+  List<Launch> _sortLaunches({
+    required List<Launch> launches,
+    required Filter? filter,
+    required String search,
+  }) {
+    final launchesWithAppliedSearch = _applySearch(
+      launches: launches,
+      search: search,
+    );
+    if (filter != null) {
+      return launchesService.sortLaunches(
+        launches: launchesWithAppliedSearch,
+        filter: filter,
+      );
+    }
+    return launchesWithAppliedSearch;
   }
 }

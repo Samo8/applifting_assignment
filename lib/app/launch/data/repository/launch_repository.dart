@@ -1,29 +1,35 @@
-import 'dart:convert';
-
+import 'package:applifting_assignment/app/launch/data/datasource/launch_local_filter_datasource.dart';
+import 'package:applifting_assignment/app/launch/data/datasource/launch_remote_datasource.dart';
+import 'package:applifting_assignment/app/launch/data/dto/launch_filter_dto.dart';
 import 'package:applifting_assignment/app/launch/data/dto/launch_dto.dart';
 import 'package:applifting_assignment/app/launch/data/repository/launch_repository_interface.dart';
-import 'package:applifting_assignment/http/http_client_interface.dart';
-import 'package:http/http.dart';
 
 class LaunchRepository implements ILaunchRepository {
-  final IHttpClient client;
+  final ILaunchRemoteDatasource launchRemoteDatasource;
+  final ILaunchLocalFilterDatasource launchLocalFilterDatasource;
 
-  const LaunchRepository(this.client);
+  const LaunchRepository({
+    required this.launchRemoteDatasource,
+    required this.launchLocalFilterDatasource,
+  });
 
   @override
   Future<List<LaunchDTO>> fetchUpcomingLaunches() async {
-    final response = await client.get('v5/launches/upcoming');
-    return _parseLaunches(response);
+    return await launchRemoteDatasource.fetchUpcomingLaunches();
   }
 
   @override
   Future<List<LaunchDTO>> fetchPastLaunches() async {
-    final response = await client.get('v5/launches/past');
-    return _parseLaunches(response);
+    return await launchRemoteDatasource.fetchPastLaunches();
   }
 
-  List<LaunchDTO> _parseLaunches(Response response) {
-    final decodedResponse = json.decode(response.body) as List<dynamic>;
-    return decodedResponse.map((launch) => LaunchDTO.fromJson(launch)).toList();
+  @override
+  Future<LaunchFilterDTO?> fetchLaunchFilter() async {
+    return await launchLocalFilterDatasource.fetchFilter();
+  }
+
+  @override
+  Future<void> persistLaunchFilter(LaunchFilterDTO filter) async {
+    await launchLocalFilterDatasource.persistFilter(filter);
   }
 }

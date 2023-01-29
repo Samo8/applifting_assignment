@@ -1,3 +1,4 @@
+import 'package:applifting_assignment/app/launch/domain/enums/filter_by_enum.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
 import 'package:applifting_assignment/app/launch/presentation/launch_detail_screen.dart';
@@ -35,24 +36,69 @@ class _LaunchScreenState extends State<LaunchScreen> {
                 horizontal: 10.0,
                 vertical: 5.0,
               ),
-              child: TextField(
-                autocorrect: false,
-                controller: _searchTextController,
-                onChanged: (value) => _launchBloc.add(
-                  LaunchSearchEvent(value),
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _searchTextController.clear();
-                      _launchBloc.add(
-                        const LaunchClearSearchEvent(),
-                      );
-                    },
-                    icon: const Icon(Icons.clear),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      autocorrect: false,
+                      controller: _searchTextController,
+                      onChanged: (value) => _launchBloc.add(
+                        LaunchSearchEvent(value),
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            _searchTextController.clear();
+                            _launchBloc.add(
+                              const LaunchClearSearchEvent(),
+                            );
+                          },
+                          icon: const Icon(Icons.clear),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 5.0),
+                  Expanded(
+                    child: DropdownButton<FilterBy>(
+                      value: state.filter?.filterBy ?? FilterBy.id,
+                      elevation: 16,
+                      onChanged: (FilterBy? value) {
+                        if (value == FilterBy.id) {
+                          _launchBloc.add(
+                            LaunchSortByLaunchIdEvent(
+                              descending: state.filter?.isDescending ?? false,
+                            ),
+                          );
+                        } else if (value == FilterBy.date) {
+                          _launchBloc.add(
+                            LaunchSortByLaunchDateEvent(
+                              descending: state.filter?.isDescending ?? false,
+                            ),
+                          );
+                        }
+                      },
+                      items: FilterBy.values.map<DropdownMenuItem<FilterBy>>((FilterBy value) {
+                        return DropdownMenuItem<FilterBy>(
+                          value: value,
+                          child: Text(value.title),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => _launchBloc.add(
+                      const LaunchUpdateDescendingSortEvent(),
+                    ),
+                    icon: Icon(
+                      Icons.sort_by_alpha,
+                      color: (state.filter != null && state.filter!.isDescending)
+                          ? Colors.black
+                          : Colors.grey,
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
