@@ -30,7 +30,7 @@ class CompanyInfoRepository implements ICompanyInfoRepository {
       if (companyInfo != null) {
         return companyInfo;
       }
-      throw const HttpException('No internet connection');
+      throw const CustomHttpException(message: 'No internet connection');
     }
   }
 }

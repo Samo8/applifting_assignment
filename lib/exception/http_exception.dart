@@ -1,10 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-class HttpException extends Equatable implements Exception {
+class CustomHttpException extends Equatable implements Exception {
   final String message;
+  final int? statusCode;
 
-  const HttpException(this.message);
+  const CustomHttpException({
+    required this.message,
+    this.statusCode,
+  });
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message, statusCode];
 }

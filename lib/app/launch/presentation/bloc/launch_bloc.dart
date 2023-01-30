@@ -2,6 +2,7 @@ import 'package:applifting_assignment/app/launch/application/launch_service_inte
 import 'package:applifting_assignment/app/launch/domain/enums/filter_by_enum.dart';
 import 'package:applifting_assignment/app/launch/domain/filter.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
+import 'package:applifting_assignment/exception/http_exception.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -44,6 +45,13 @@ class LaunchBloc extends Bloc<LaunchEvent, LaunchState> {
             filter: filter,
             isLoading: false,
             error: '',
+          ),
+        );
+      } on CustomHttpException catch (e) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            error: e.message,
           ),
         );
       } catch (e) {

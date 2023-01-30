@@ -77,11 +77,12 @@ void main() {
     });
 
     test('should throw exception when fetchUpcomingLaunches is unsuccessful', () async {
-      when(remoteDatasource.fetchUpcomingLaunches())
-          .thenThrow(const HttpException('Could not fetch upcoming launches'));
+      when(remoteDatasource.fetchUpcomingLaunches()).thenThrow(
+        const CustomHttpException(message: 'Could not fetch upcoming launches'),
+      );
       expect(
         launchRepository.fetchUpcomingLaunches(),
-        throwsA(isA<HttpException>()
+        throwsA(isA<CustomHttpException>()
             .having((e) => e.message, 'message', 'Could not fetch upcoming launches')),
       );
     });
@@ -99,11 +100,12 @@ void main() {
     });
 
     test('should throw exception when fetchPastLaunches is unsuccessful', () async {
-      when(remoteDatasource.fetchPastLaunches())
-          .thenThrow(const HttpException('Could not fetch past launches'));
+      when(remoteDatasource.fetchPastLaunches()).thenThrow(
+        const CustomHttpException(message: 'Could not fetch past launches'),
+      );
       expect(
         launchRepository.fetchPastLaunches(),
-        throwsA(isA<HttpException>()
+        throwsA(isA<CustomHttpException>()
             .having((e) => e.message, 'message', 'Could not fetch past launches')),
       );
     });
