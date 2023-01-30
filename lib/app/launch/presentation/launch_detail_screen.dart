@@ -74,6 +74,21 @@ class LaunchDetailScreen extends StatelessWidget {
               'Detial: ${launch.details}',
               textAlign: TextAlign.center,
             ),
+          Column(
+            children: [
+              const SizedBox(height: 10.0),
+              Text(
+                'Crew:',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+              if (launch.crew.isNotEmpty)
+                Column(
+                  children: launch.crew.map((e) => Text(e.role ?? '')).toList(),
+                )
+              else
+                const Text('No info about crew'),
+            ],
+          ),
         ],
       ),
     );
