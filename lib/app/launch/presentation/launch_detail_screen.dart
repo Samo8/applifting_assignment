@@ -2,6 +2,7 @@ import 'package:applifting_assignment/app/launch/domain/failure.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
 import 'package:applifting_assignment/i18n/strings.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,25 +50,16 @@ class LaunchDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20.0),
           if (launch.links.patch.small != null)
-            Image.network(
-              launch.links.patch.small!,
+            CachedNetworkImage(
+              imageUrl: launch.links.patch.small!,
+              placeholder: (context, url) => const SizedBox(
+                width: 25.0,
+                height: 25.0,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
               height: 150.0,
               fit: BoxFit.fitHeight,
-              loadingBuilder: (
-                BuildContext context,
-                Widget child,
-                ImageChunkEvent? loadingProgress,
-              ) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
-              },
             ),
           Failures(failures: launch.failures),
           const SizedBox(height: 10.0),
