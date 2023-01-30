@@ -1,16 +1,14 @@
-# applifting_assignment
+# Applifting SpaceX
 
-A new Flutter project.
+This is Flutter app for Applifitng task.
 
-## Getting Started
+The application shows SpaceX company data, upcoming and past launches.
 
-This project is a starting point for a Flutter application.
+- [App communicates with SpaceX API](https://github.com/r-spacex/SpaceX-API)
 
-A few resources to get you started if this is your first Flutter project:
+User can search in past and upcmoning launches. Also there is possibility to sort launches by id and date.
+Sort filters are automatically stored to phone memory.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## State management
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Applicaton uses BLoC for state managements.
