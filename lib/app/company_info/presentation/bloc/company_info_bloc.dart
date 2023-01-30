@@ -17,7 +17,7 @@ class CompanyInfoBloc extends Bloc<CompanyInfoEvent, CompanyInfoState> {
         final companyInfo = await companyInfoService.getCompanyInfo();
 
         emit(CompanyInfoLoadedState(companyInfo));
-      } on HttpException catch (e) {
+      } on CustomHttpException catch (e) {
         emit(CompanyInfoErrorState(e.message));
       } catch (e) {
         emit(CompanyInfoErrorState(e.toString()));

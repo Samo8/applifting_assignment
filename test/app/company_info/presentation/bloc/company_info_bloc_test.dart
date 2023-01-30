@@ -56,7 +56,9 @@ void main() {
       'emits [CompanyInfoLoadingState, CompanyInfoErrorState] when getCompanyInfo throws an HttpException',
       build: () => CompanyInfoBloc(companyInfoService),
       act: (bloc) {
-        when(companyInfoService.getCompanyInfo()).thenThrow(const HttpException('Http error'));
+        when(companyInfoService.getCompanyInfo()).thenThrow(
+          const CustomHttpException(message: 'Http error'),
+        );
         bloc.add(const CompanyInfoFetchDataEvent());
       },
       expect: () => [
@@ -69,7 +71,9 @@ void main() {
       'emits [CompanyInfoLoadingState, CompanyInfoErrorState] when getCompanyInfo throws an Exception',
       build: () => CompanyInfoBloc(companyInfoService),
       act: (bloc) {
-        when(companyInfoService.getCompanyInfo()).thenThrow(const HttpException('Error'));
+        when(companyInfoService.getCompanyInfo()).thenThrow(
+          const CustomHttpException(message: 'Error'),
+        );
         bloc.add(const CompanyInfoFetchDataEvent());
       },
       expect: () => [

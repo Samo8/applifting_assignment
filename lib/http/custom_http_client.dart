@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:applifting_assignment/exception/http_exception.dart';
 import 'package:applifting_assignment/http/http_client_interface.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,17 +26,29 @@ class CustomHttpClient implements IHttpClient {
         case 200:
           return response;
         case 400:
-          throw const HttpException('Bad request');
+          throw CustomHttpException(
+            message: 'Bad request',
+            statusCode: response.statusCode,
+          );
         case 401:
         case 403:
-          throw const HttpException('Unauthorized');
+          throw CustomHttpException(
+            message: 'Unauthorized',
+            statusCode: response.statusCode,
+          );
         case 404:
-          throw const HttpException('Not found');
+          throw CustomHttpException(
+            message: 'Not found',
+            statusCode: response.statusCode,
+          );
         default:
-          throw HttpException('Unexpected error, status code: ${response.statusCode}');
+          throw CustomHttpException(
+            message: 'Unexpected error',
+            statusCode: response.statusCode,
+          );
       }
     } on SocketException {
-      throw const HttpException('No internet connection');
+      throw const CustomHttpException(message: 'No internet connection');
     } catch (_) {
       rethrow;
     }
