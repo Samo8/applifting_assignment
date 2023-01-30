@@ -1,0 +1,40 @@
+{
+	"general": {
+		"appName": "Applifting SpaceX",
+		"noInternet": "No internet connection"
+	},
+	"home": {
+		"bottomNavBar": {
+			"info": "Info",
+			"launches": "Launches"
+		}
+	},
+	"companyInfo": {
+		"name": "Name",
+		"headquarters": "Headquarters",
+		"ceoAndCto": "CEO & CTO",
+		"numberOfEmployees": "Number of employees",
+		"foundedIn": "Founded in",
+		"summary": "Summary"
+	},
+	"launch": {
+		"noLaunches": "There are no launches",
+		"search": "Search",
+		"filterBy": ["By id", "By date"]
+	},
+	"launchDetail": {
+		"launchedAt": "Launched at",
+		"detail": "Detail",
+		"crew": "Crew",
+		"noInfoAboutCrew": "No info about crew",
+		"flightFailed": "The flight has failed",
+		"failures": "Failures",
+		"altitude": "Altitude"
+	},
+	"http": {
+		"badRequest": "Bad request",
+		"unauthorized": "Unauthorized",
+		"notFound": "Not found",
+		"unexpectedError": "Unexpected error"
+	}
+}

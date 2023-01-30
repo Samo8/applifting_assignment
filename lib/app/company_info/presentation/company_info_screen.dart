@@ -1,4 +1,5 @@
 import 'package:applifting_assignment/app/company_info/presentation/bloc/company_info_bloc.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,7 +62,7 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
               children: [
                 ListItem(
                   children: [
-                    const TitleItem(text: 'Name:'),
+                    TitleItem(text: '${t.companyInfo.name}:'),
                     BasicItem(
                       text: companyInfo.name,
                     ),
@@ -69,7 +70,7 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                 ),
                 ListItem(
                   children: [
-                    const TitleItem(text: 'Headquarters:'),
+                    TitleItem(text: '${t.companyInfo.headquarters}:'),
                     BasicItem(
                       text: '${headquarters.address}, ${headquarters.city}, ${headquarters.state}',
                     ),
@@ -77,7 +78,7 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                 ),
                 ListItem(
                   children: [
-                    const TitleItem(text: 'CEO & CTO:'),
+                    TitleItem(text: '${t.companyInfo.ceoAndCto}:'),
                     BasicItem(
                       text: companyInfo.ceo == companyInfo.cto
                           ? companyInfo.ceo
@@ -87,7 +88,7 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                 ),
                 ListItem(
                   children: [
-                    const TitleItem(text: 'Number of employees:'),
+                    TitleItem(text: '${t.companyInfo.numberOfEmployees}:'),
                     BasicItem(
                       text: '${companyInfo.employees}',
                     ),
@@ -95,7 +96,7 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                 ),
                 ListItem(
                   children: [
-                    const TitleItem(text: 'Founded in:'),
+                    TitleItem(text: '${t.companyInfo.foundedIn}:'),
                     BasicItem(
                       text: '${companyInfo.founded}',
                     ),
@@ -103,7 +104,7 @@ class _CompanyInfoScreenState extends State<CompanyInfoScreen> {
                 ),
                 ListItem(
                   children: [
-                    const TitleItem(text: 'Summary:'),
+                    TitleItem(text: '${t.companyInfo.summary}:'),
                     BasicItem(
                       text: companyInfo.summary,
                     ),

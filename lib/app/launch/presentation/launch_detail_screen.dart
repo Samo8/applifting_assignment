@@ -1,6 +1,7 @@
 import 'package:applifting_assignment/app/launch/domain/failure.dart';
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +43,8 @@ class LaunchDetailScreen extends StatelessWidget {
         ),
         children: [
           Text(
-            'Launched at: ${context.read<LaunchBloc>().launchesService.formatDate(launch.date)}',
+            '${t.launchDetail.launchedAt}: '
+            '${context.read<LaunchBloc>().launchesService.formatDate(launch.date)}',
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20.0),
@@ -71,14 +73,14 @@ class LaunchDetailScreen extends StatelessWidget {
           const SizedBox(height: 10.0),
           if (launch.details != null)
             Text(
-              'Detial: ${launch.details}',
+              '${t.launchDetail.detail}: ${launch.details}',
               textAlign: TextAlign.center,
             ),
           Column(
             children: [
               const SizedBox(height: 10.0),
               Text(
-                'Crew:',
+                '${t.launchDetail.crew}:',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               if (launch.crew.isNotEmpty)
@@ -86,7 +88,7 @@ class LaunchDetailScreen extends StatelessWidget {
                   children: launch.crew.map((e) => Text(e.role ?? '')).toList(),
                 )
               else
-                const Text('No info about crew'),
+                Text(t.launchDetail.noInfoAboutCrew),
             ],
           ),
         ],
@@ -110,16 +112,18 @@ class Failures extends StatelessWidget {
         children: [
           const SizedBox(height: 20.0),
           Text(
-            'The flight has failed',
+            t.launchDetail.flightFailed,
             style: Theme.of(context).textTheme.subtitle1,
           ),
-          const Text('Failures:'),
+          Text('${t.launchDetail.failures}:'),
           Column(
             children: failures
                 .map(
                   (e) => ListTile(
                     title: Text(e.reason),
-                    subtitle: e.altitude != null ? Text('Altitude: ${e.altitude}') : null,
+                    subtitle: e.altitude != null
+                        ? Text('${t.launchDetail.altitude}: ${e.altitude}')
+                        : null,
                   ),
                 )
                 .toList(),

@@ -6,15 +6,22 @@ import 'package:applifting_assignment/app/launch/application/launch_service_inte
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
 import 'package:applifting_assignment/app/launch/presentation/launch_detail_screen.dart';
 import 'package:applifting_assignment/constants/custom_theme.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
 import 'package:applifting_assignment/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LocaleSettings.useDeviceLocale();
   await configureDependencies();
 
-  runApp(const AppliftingApp());
+  runApp(
+    TranslationProvider(
+      child: const AppliftingApp(),
+    ),
+  );
 }
 
 class AppliftingApp extends StatelessWidget {
@@ -45,6 +52,9 @@ class AppliftingApp extends StatelessWidget {
         theme: CustomTheme.lightTheme,
         darkTheme: CustomTheme.darkTheme,
         home: const HomeScreen(),
+        locale: TranslationProvider.of(context).flutterLocale,
+        supportedLocales: AppLocaleUtils.supportedLocales,
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case HomeScreen.routeName:
