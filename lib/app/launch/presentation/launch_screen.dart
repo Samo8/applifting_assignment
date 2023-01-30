@@ -2,6 +2,8 @@ import 'package:applifting_assignment/app/launch/domain/enums/filter_by_enum.dar
 import 'package:applifting_assignment/app/launch/domain/launch.dart';
 import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
 import 'package:applifting_assignment/app/launch/presentation/launch_detail_screen.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,7 +48,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
                         LaunchSearchEvent(value),
                       ),
                       decoration: InputDecoration(
-                        hintText: 'Search',
+                        hintText: t.launch.search,
                         suffixIcon: IconButton(
                           onPressed: () {
                             _searchTextController.clear();
@@ -79,10 +81,11 @@ class _LaunchScreenState extends State<LaunchScreen> {
                           );
                         }
                       },
-                      items: FilterBy.values.map<DropdownMenuItem<FilterBy>>((FilterBy value) {
+                      items: FilterBy.values
+                          .mapIndexed<DropdownMenuItem<FilterBy>>((i, FilterBy value) {
                         return DropdownMenuItem<FilterBy>(
                           value: value,
-                          child: Text(value.title),
+                          child: Text(t.launch.filterBy[i]),
                         );
                       }).toList(),
                     ),
@@ -181,8 +184,8 @@ class LaunchScreenBody extends StatelessWidget {
       );
     } else {
       if (launches.isEmpty) {
-        return const Center(
-          child: Text('There are no launches'),
+        return Center(
+          child: Text(t.launch.noLaunches),
         );
       }
       return RefreshIndicator(

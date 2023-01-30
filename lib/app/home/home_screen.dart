@@ -2,6 +2,7 @@ import 'package:applifting_assignment/app/company_info/presentation/company_info
 import 'package:applifting_assignment/app/home/bloc/home_bloc.dart';
 import 'package:applifting_assignment/app/home/enums/bottom_nav_bar_item.dart';
 import 'package:applifting_assignment/app/launch/presentation/launch_screen.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,9 +19,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Applifting SpaceX',
-            ),
+            title: Text(t.general.appName),
           ),
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
@@ -32,14 +31,14 @@ class HomeScreen extends StatelessWidget {
             },
           ),
           bottomNavigationBar: BottomNavigationBar(
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.info),
-                label: 'Info',
+                icon: const Icon(Icons.info),
+                label: t.home.bottomNavBar.info,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.rocket),
-                label: 'Launches',
+                icon: const Icon(Icons.rocket),
+                label: t.home.bottomNavBar.launches,
               ),
             ],
             currentIndex: state.bottomNavBarItem.index,

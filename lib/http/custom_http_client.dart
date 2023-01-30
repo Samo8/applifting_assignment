@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:applifting_assignment/exception/http_exception.dart';
 import 'package:applifting_assignment/http/http_client_interface.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
 import 'package:http/http.dart' as http;
 
 class CustomHttpClient implements IHttpClient {
@@ -27,28 +28,28 @@ class CustomHttpClient implements IHttpClient {
           return response;
         case 400:
           throw CustomHttpException(
-            message: 'Bad request',
+            message: t.http.badRequest,
             statusCode: response.statusCode,
           );
         case 401:
         case 403:
           throw CustomHttpException(
-            message: 'Unauthorized',
+            message: t.http.unauthorized,
             statusCode: response.statusCode,
           );
         case 404:
           throw CustomHttpException(
-            message: 'Not found',
+            message: t.http.notFound,
             statusCode: response.statusCode,
           );
         default:
           throw CustomHttpException(
-            message: 'Unexpected error',
+            message: t.http.unexpectedError,
             statusCode: response.statusCode,
           );
       }
     } on SocketException {
-      throw const CustomHttpException(message: 'No internet connection');
+      throw CustomHttpException(message: t.general.noInternet);
     } catch (_) {
       rethrow;
     }

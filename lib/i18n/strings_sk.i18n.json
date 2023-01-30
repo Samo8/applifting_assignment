@@ -1,0 +1,40 @@
+{
+	"general": {
+		"appName": "Applifting SpaceX",
+		"noInternet": "Žiadne internetové pripojenie"
+	},
+	"home": {
+		"bottomNavBar": {
+			"info": "Informácie",
+			"launches": "Štarty"
+		}
+	},
+	"companyInfo": {
+		"name": "Názov",
+		"headquarters": "Sídlo",
+		"ceoAndCto": "CEO & CTO",
+		"numberOfEmployees": "Počet zamestnancov",
+		"foundedIn": "Založené v",
+		"summary": "Zhrnutie"
+	},
+	"launch": {
+		"noLaunches": "Nenašli sa žiadne štarty",
+		"search": "Vyhľadať",
+		"filterBy": ["Podľa id", "Podľa dátumu"]
+	},
+	"launchDetail": {
+		"launchedAt": "Spustené o",
+		"detail": "Detail",
+		"crew": "Posádka",
+		"noInfoAboutCrew": "Žiadne informácie ohľadom posádky",
+		"flightFailed": "Let zlyhal",
+		"failures": "Zlyhania",
+		"altitude": "Nadmorská výška"
+	},
+	"http": {
+		"badRequest": "Zlá požiadavka",
+		"unauthorized": "Neautorizovaný",
+		"notFound": "Nenájdené",
+		"unexpectedError": "Neočakávaná chyba"
+	}
+}
