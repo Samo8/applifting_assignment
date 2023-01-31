@@ -1,0 +1,128 @@
+import 'package:applifting_assignment/app/launch/domain/failure.dart';
+import 'package:applifting_assignment/app/launch/domain/launch.dart';
+import 'package:applifting_assignment/app/launch/presentation/bloc/launch_bloc.dart';
+import 'package:applifting_assignment/i18n/strings.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class LaunchDetailScreenArgs extends Equatable {
+  final Launch launch;
+
+  const LaunchDetailScreenArgs(this.launch);
+
+  @override
+  List<Object> get props => [launch];
+}
+
+class LaunchDetailScreen extends StatelessWidget {
+  static const routeName = '/launch-detail';
+
+  final LaunchDetailScreenArgs args;
+
+  Launch get launch => args.launch;
+
+  const LaunchDetailScreen({
+    required this.args,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          launch.name,
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.only(
+          top: 10.0,
+          left: 20.0,
+          right: 20.0,
+        ),
+        children: [
+          Text(
+            '${t.launchDetail.launchedAt}: '
+            '${context.read<LaunchBloc>().launchesService.formatDate(launch.date)}',
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20.0),
+          if (launch.links.patch.small != null)
+            CachedNetworkImage(
+              imageUrl: launch.links.patch.small!,
+              placeholder: (context, url) => const SizedBox(
+                width: 25.0,
+                height: 25.0,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              height: 150.0,
+              fit: BoxFit.fitHeight,
+            ),
+          Failures(failures: launch.failures),
+          const SizedBox(height: 10.0),
+          if (launch.details != null)
+            Text(
+              '${t.launchDetail.detail}: ${launch.details}',
+              textAlign: TextAlign.center,
+            ),
+          Column(
+            children: [
+              const SizedBox(height: 10.0),
+              Text(
+                '${t.launchDetail.crew}:',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+              if (launch.crew.isNotEmpty)
+                Column(
+                  children: launch.crew.map((e) => Text(e.role ?? '')).toList(),
+                )
+              else
+                Text(t.launchDetail.noInfoAboutCrew),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Failures extends StatelessWidget {
+  final List<Failure> failures;
+
+  const Failures({
+    required this.failures,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (failures.isNotEmpty) {
+      return Column(
+        children: [
+          const SizedBox(height: 20.0),
+          Text(
+            t.launchDetail.flightFailed,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+          Text('${t.launchDetail.failures}:'),
+          Column(
+            children: failures
+                .map(
+                  (e) => ListTile(
+                    title: Text(e.reason),
+                    subtitle: e.altitude != null
+                        ? Text('${t.launchDetail.altitude}: ${e.altitude}')
+                        : null,
+                  ),
+                )
+                .toList(),
+          ),
+        ],
+      );
+    }
+    return const SizedBox.shrink();
+  }
+}
