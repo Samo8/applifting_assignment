@@ -12,3 +12,5 @@ Sort filters are automatically stored to phone memory.
 ## State management
 
 Applicaton uses BLoC for state managements.
+
+Application runs on iOS, Android, web and desktop.
